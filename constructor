@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorTrade - Repo Sale!!!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: cyan;
+            color: yellow;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            height: 50%;
+            background-color: gray;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        td {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <?php
+                // Vehicle parent class with price
+                class Vehicle {
+                    public $make;
+                    public $model;
+                    public $year;
+                    public $color;
+                    public $price;
+
+                    public function __construct($make, $model, $year, $color, $price) {
+                        $this->make = $make;
+                        $this->model = $model;
+                        $this->year = $year;
+                        $this->color = $color;
+                        $this->price = $price;
+                    }
+
+                    public function start() {
+                        echo "{$this->model} engine is starting..!<br>";
+                    }
+
+                    public function stop() {
+                        echo "{$this->model} brakes have been applied..!<br>";
+                    }
+
+                    public function displayPrice() {
+                        echo "Price: PHP " . number_format($this->price, 2) . "<br>";
+                    }
+                }
+
+                // Cars class extending Vehicle
+                class Cars extends Vehicle {
+                    public $variant;
+
+                    public function __construct($make, $model, $year, $color, $variant, $price) {
+                        parent::__construct($make, $model, $year, $color, $price);
+                        $this->variant = $variant;
+                    }
+
+                    public function accelerate() {
+                        echo "{$this->model} stepping on the accelerator..!<br>";
+                    }
+
+                    public function specs() {
+                        echo "This is the {$this->make} {$this->model} {$this->variant} in {$this->color}, released in {$this->year}.<br>";
+                    }
+                }
+
+                // Motorcycles class extending Vehicle
+                class Motorcycles extends Vehicle {
+                    public $displacement;
+
+                    public function __construct($make, $model, $year, $color, $displacement, $price) {
+                        parent::__construct($make, $model, $year, $color, $price);
+                        $this->displacement = $displacement;
+                    }
+
+                    public function accelerate() {
+                        echo "{$this->model} twisting the throttle..!<br>";
+                    }
+
+                    public function specs() {
+                        echo "This is a {$this->model} - {$this->displacement}cc by {$this->make} in {$this->color}, released in {$this->year}.<br>";
+                    }
+                }
+
+                // Order class to handle customer and order information
+                class Order {
+                    public $customerName;
+                    public $vehicle;
+                    public $quantity;
+
+                    public function __construct($customerName, $vehicle, $quantity) {
+                        $this->customerName = $customerName;
+                        $this->vehicle = $vehicle;
+                        $this->quantity = $quantity;
+                    }
+
+                    public function calculateTotal() {
+                        $total = $this->vehicle->price * $this->quantity;
+                        return $total;
+                    }
+
+                    public function displayOrder() {
+                        echo "Customer: {$this->customerName}<br>";
+                        echo "Vehicle: {$this->vehicle->make} {$this->vehicle->model}<br>";
+                        echo "Quantity: {$this->quantity}<br>";
+                        echo "Total Price: PHP " . number_format($this->calculateTotal(), 2) . "<br>";
+                    }
+                }
+
+                // Instantiate vehicle objects
+                $car = new Cars("Suzuki", "Swift", 2017, "Pearl White", "AT", 650000);
+                $motorcycle = new Motorcycles("Suzuki", "GSX-R", 2020, "Ecstar Blue", 1000, 900000);
+
+                // Display car details
+                $car->specs();
+                $car->displayPrice();
+                $car->start();
+                $car->accelerate();
+                $car->stop();
+
+                echo "<br>";
+
+                // Display motorcycle details
+                $motorcycle->specs();
+                $motorcycle->displayPrice();
+                $motorcycle->start();
+                $motorcycle->accelerate();
+                $motorcycle->stop();
+
+                echo "<br><br>";
+
+                // Create an order and display the order details
+                $order1 = new Order("Juan Dela Cruz", $car, 2);
+                $order1->displayOrder();
+
+                echo "<br>";
+
+                $order2 = new Order("Maria Clara", $motorcycle, 1);
+                $order2->displayOrder();
+                ?>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
